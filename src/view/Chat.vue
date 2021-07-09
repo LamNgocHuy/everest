@@ -11,7 +11,7 @@
                     </div>
                     <div class="align-self-center ml-auto">
                         <div class="custom-control custom-checkbox">
-                            <input class="custom-control-input" id="id-user-1" type="checkbox">
+                            <input class="custom-control-input" id="id-user-1" type="checkbox" @click="createUsersNeedSend(user.userId)">
                             <label class="custom-control-label" for="id-user-1"></label>
                         </div>
                     </div>
@@ -73,14 +73,18 @@ export default {
                     pictureURL: 'https://offsetcode.com/themes/messenger/1.1/assets/images/avatars/6.jpg'
                 },
             ],
-            messenger: ''
+            messenger: '',
+            UNeedSend: []
         }
     },
     methods: {
         toggleMessage() {
-            if (confirm("Do you really want to delete?")) {
+            if (confirm("Do you really want to reset?")) {
                 document.getElementById('message').value = '';
             }
+        },
+        createUsersNeedSend(userId) {
+            this.UNeedSend.push(userId)
         }
     }
 }

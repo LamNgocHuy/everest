@@ -1,52 +1,33 @@
 <template>
-  <div class="container py-5">
-    <div class="card login mx-auto shadow-sm">
-      <div class="card-body">
-        <h1 class="login-title">Welcome</h1>
-        <h3 v-if="!this.$store.state.auth.isAuthenticated" class="bg-danger border py-3 mb-4 text-light rounded-3 alert-incorrect">Incorrect account!!!</h3>
-        <form @submit.prevent="submitForm">
-          <div class="form-group">
-            <input 
-            type="email"
-            id="email"
-            class="form-control" 
-            placeholder="Email"
-            v-model.trim="$v.email.$model"
-            :class="{ 'is-invalid': $v.email.$error, 'is-valid': !$v.email.$invalid}">
-            <div class="valid-feedback">Your email is valid!</div>
-            <div class="invalid-feedback">
-              <span v-if="!$v.email.required">Email is required.</span>
-              <span v-if="!$v.email.isUnique">This email is already registered.</span>
-            </div>
+  <div class="container 100vh">
+    <div class="d-flex align-items-center justify-content-center h-100">
+      <div class="d-flex flex-column form">
+          <h3 class="text-center mb-4">Welcome</h3>
+          <form id="form-validator" @submit.prevent="submitForm">
+              <div class="form-group">
+                  <input type="text" id="email" class="form-control" placeholder="Email" v-model.trim="$v.email.$model"
+                  :class="{ 'is-invalid': $v.email.$error, 'is-valid': !$v.email.$invalid}">
+                  <div class="valid-feedback">Your email is valid!</div>
+                  <div class="invalid-feedback">
+                    <span v-if="!$v.email.required">Email is required.</span>
+                    <span v-if="!$v.email.isUnique">This email is already registered.</span>
+                  </div>
+              </div>
+              <div class="form-group">
+                  <input type="password" id="password" class="form-control" placeholder="Password" v-model.trim="$v.password.$model"
+                 :class="{ 'is-invalid': $v.password.$error, 'is-valid': !$v.password.$invalid}">
+                  <div class="valid-feedback">Your password is valid!</div>
+                  <div class="invalid-feedback">
+                    <span v-if="!$v.password.required">Password is required.</span>
+                    <span v-if="!$v.password.minLength">{{ $v.password.$params.minLength.min  }} characters minimun.</span>
+                  </div>
+              </div>
+              <button type="submit" class="form-submit">Login</button>
+          </form>
+          <div class="d-flex flex-row mt-2">
+              <button class="btn-fb me-3">Facebook</button>
+              <button class="btn-gg">Google</button>
           </div>
-          
-          
-          <div style="margin-bottom: 3em"></div>
-
-          <div class="form-group">
-            <input 
-            type="password" 
-            class="form-control" 
-            placeholder="Password"
-            id="password"
-            v-model.trim="$v.password.$model"
-            :class="{ 'is-invalid': $v.password.$error, 'is-valid': !$v.password.$invalid}">
-            <div class="valid-feedback">Your password is valid!</div>
-            <div class="invalid-feedback">
-              <span v-if="!$v.password.required">Password is required.</span>
-              <span v-if="!$v.password.minLength">{{ $v.password.$params.minLength.min  }} characters minimun.</span>
-            </div>
-          </div>
-          
-          <div style="margin-bottom: 3.2em"></div>
-          <button type="submit" class="btn btn-primary">Login</button>
-          <div style="margin-bottom: 2.33em"></div>
-          <div class="d-flex flex-row">
-            <button class="btn btn-secondary">Facebook</button>
-            <div style="margin-right: 2.8em"></div>
-            <button class="btn btn-danger">Google</button>
-          </div>
-        </form>
       </div>
     </div>
   </div>
@@ -82,7 +63,7 @@ export default {
     },
     password: {
       required,
-      minLength: minLength(8)
+      minLength: minLength(6)
     }
   },
   methods: {
@@ -102,70 +83,99 @@ export default {
 <style lang="scss" scoped>
 @import '../assets/style/common.scss';
 
-.card {
-  border-radius: 8px !important;
+body {
+    background-color: #DBDBDB;
+}
+textarea:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+.uneditable-input:focus {   
+box-shadow: none;
+outline: 0 none;
+}
+.form {
+    width: 360px;
+    padding: 32px 28px;
+    background-color: #F2F2F2;
+    border-radius: 2px;
+    margin: 24px;
+    box-shadow: 0 2px 5px 0 rgba(51, 62, 73, 0.1);
+    position: relative;
+    top: 100px;
+}
+.form-group {
+    margin-bottom: 20px;
 }
 
-.login {
-  width: $wLoginForm;
-  background-color: $bgCard;
-  padding: 38px 85px;
-  .login-title {
-    font-size: 3.175em;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0px;
-    margin-bottom: 25px !important;
-  }
+.form-label {
+    font-weight: bold;
 }
 
-.btn {
-  padding: 25px 10px !important;
-  font-size: 1.267em;
-  font-weight: 600 !important;
-  letter-spacing: 1px;
-  border: none;
+.form-control {
+    height: 50px;
+    padding: 8px 12px !important;
+    background-color: #F2F2F2;
+    border: 2px solid #6B7A8F;
+    border-radius: 5px;
+    outline: none;
 }
 
-.btn-primary {
-  width: 100%;
-  background-color: $btnPrimary;
-  color: $clTextWhite;
+.form-control:hover {
+    border-color: #1dbfaf !important;
 }
 
-.btn-secondary {
-  width: calc((100% - 1.8em)/2);
-  background-color: $btnSecondary;
-  color: $clTextWhite;
+.form-group.invalid .form-control {
+    border-color: #f33a58;
+    color: #f33a58;
 }
 
-.btn-danger {
-  width: calc((100% - 1.8em)/2);
-  background-color: $btnDanger;
-  color: $clTextWhite;
+.form-submit, .btn-fb, .btn-gg {
+    outline: none;
+    background-color: #7ec2df;
+    margin-top: 8px;
+    padding: 12px 16px;
+    font-weight: 600;
+    color: #fff;
+    border: none;
+    width: 100%;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
-input {
-    border: 2px solid $borderInput;
-    border-radius: 8px !important;
-    padding: 25px;
-    background-color: $bgCard;
-    font-size: 1.725em;
-    font-weight: 400;
-    letter-spacing: 0.02em;
+.btn-fb {
+    background-color: #4795FF;
 }
-::placeholder {
-    color: $clTextDark !important;
+
+.btn-gg {
+    background-color: #EA4336;
 }
+
+.form-submit:hover {
+    background-color: #7ec2df;
+}
+
+.spacer {
+    margin-top: 36px;
+}
+
 .valid-feedback, .invalid-feedback {
   position: relative !important;
   text-align: left;
   top: 3px;
   right: -5px;
-  font-size: 1.33em;
-}
-.alert-incorrect {
-  transition: 0.5s;
 }
 
 </style>

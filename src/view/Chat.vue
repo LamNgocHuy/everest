@@ -63,12 +63,12 @@ export default {
                     pictureURL: 'https://offsetcode.com/themes/messenger/1.1/assets/images/avatars/6.jpg'
                 },
                 {
-                    userId: '5',
+                    userId: '6',
                     displayName: 'Nguyen Van C',
                     pictureURL: 'https://offsetcode.com/themes/messenger/1.1/assets/images/avatars/6.jpg'
                 },
                 {
-                    userId: '5',
+                    userId: '7',
                     displayName: 'Nguyen Van C',
                     pictureURL: 'https://offsetcode.com/themes/messenger/1.1/assets/images/avatars/6.jpg'
                 },
@@ -85,7 +85,7 @@ export default {
         },
         createUsersNeedSend(userId) {
             this.UNeedSend.push(userId)
-        }
+        },
     }
 }
 </script>

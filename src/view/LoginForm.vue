@@ -3,7 +3,7 @@
     <div class="d-flex align-items-center justify-content-center h-100">
       <div class="d-flex flex-column form">
           <h3 class="text-center mb-4">Welcome</h3>
-          <form id="form-validator" @submit.prevent="submitForm">
+          <form id="form-validator" @submit.prevent="submit">
               <div class="form-group">
                   <input type="text" id="email" class="form-control" placeholder="Email" v-model.trim="$v.email.$model"
                   :class="{ 'is-invalid': $v.email.$error, 'is-valid': !$v.email.$invalid}">
@@ -22,7 +22,7 @@
                     <span v-if="!$v.password.minLength">{{ $v.password.$params.minLength.min  }} characters minimun.</span>
                   </div>
               </div>
-              <button type="submit" class="form-submit">Login</button>
+              <button type="submit" class="form-submit" id="submit">Login</button>
           </form>
           <div class="d-flex flex-row mt-2">
               <button class="btn-fb me-3">Facebook</button>
@@ -67,14 +67,15 @@ export default {
     }
   },
   methods: {
-    submitForm() {
-      // Handler login
-      var accountLogin = {
-        email: this.email,
-        password: this.password
+    submit() {
+      this.$v.$touch()
+      if (!this.$v.$invalid) {
+        var accountLogin = {
+          email: this.email,
+          password: this.password
+        }
+        this.$store.dispatch("login", accountLogin)
       }
-      // console.log(accountLogin)
-      this.$store.dispatch("login", accountLogin)
     },
   }
 }
@@ -130,10 +131,6 @@ outline: 0 none;
     border: 2px solid #6B7A8F;
     border-radius: 5px;
     outline: none;
-}
-
-.form-control:hover {
-    border-color: #1dbfaf !important;
 }
 
 .form-group.invalid .form-control {
